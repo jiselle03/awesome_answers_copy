@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Awesome Answers</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://js.stripe.com/v3/"></script>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZKGpCxrKPIc8lGAmAZsKHste-gNB83Rw"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/markerclustererplus/2.1.4/markerclusterer.min.js"></script>
+  </head>
+
+  <body>
+    <nav>
+    <% if user_signed_in? %>
+      Hello, <%= current_user.full_name %>
+      <%= link_to "Log Out", session_path, method: :delete, data: { confirm: "Are you sure you want to log out?" } %> | 
+    <% else %>
+      <%= link_to "Log In", new_session_path %> | 
+      <%= link_to "Sign Up", new_user_path %> | 
+      <%= link_to "Sign in with Github", sign_in_with_github_path %>
+    <% end %>
+    <%= link_to "Liked Questions", liked_questions_path %>
+      <hr>
+      <%= link_to('Home', root_path) %> | 
+      <%= link_to('All Questions', questions_path) %> | 
+      <%= link_to('New Question', new_question_path) %> | 
+      <%= link_to('Contact Us', contacts_new_path) %>
+    </nav>
+    
+    <%#= flash[:notice] || flash[:alert]%>
+    <p>
+    <% flash.each do |type, message| %>
+      <div class="flash flash-<%= type %>">
+        <%= message %>
+      </div>
+    <% end %>
+    </p>
+
+    <%= yield %>
+
+  </body>
+</html>
